@@ -29,8 +29,13 @@ router.post('/upload',auth , authAdmin, (req, res) =>{
             return res.status(400).json({msg: "File format is incorrect."})
         }
 
-        cloudinary.v2.uploader.upload(file.tempFilePath, {folder: "test"}, async(err, result)=>{
-            if(err) throw err;
+        cloudinary.v2.uploader.upload(file.tempFilePath, {folder: "blog"}, async(err, result)=>{
+            if(err) {
+                console.log(err)
+                return res.status(500).json({
+                    message: "Internal Server Error"
+                })
+            };
 
             removeTmp(file.tempFilePath)
 
